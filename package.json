@@ -1,12 +1,13 @@
 {
   "name": "acropolis-mg",
-  "version": "1.0.0",
+  "version": "0.2.2",
   "description": "node mongoDb client, utilities and Best Practices",
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_OPTIONS='--experimental-vm-modules' jest",
-    "examples": "node --trace-warnings lib/scripts/examples.js"
+    "test": "NODE_OPTIONS='--experimental-vm-modules' jest --detectOpenHandles",
+    "examples": "node --trace-warnings lib/scripts/examples.js",
+    "connect": "node --trace-warnings lib/scripts/connect.js"
   },
   "repository": {
     "type": "git",
@@ -52,7 +53,7 @@
     ],
     "globals": {
       "__mongoUrl__": "mongodb://localhost:27017/test",
-      "__inspect__": false
+      "__inspect__": true
     }
   }
 }

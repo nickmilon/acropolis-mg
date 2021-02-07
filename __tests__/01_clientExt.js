@@ -4,15 +4,15 @@
  * @jest-environment node
  */
 
+import { DummyLogger, inspectIt } from 'acropolis-nd/lib/Plato.js';
 import { MgClientExt } from '../index.js';
-import { mongoConnOptions } from '../config.js'
+import { mongoConnOptions } from '../config.js';
+import { connectAndPing } from '../lib/scripts/connect.js';
+// result = await connectAndPing(connUri, true, DummyLogger); // check native client first
+// expect(async () => { await connectAndPing(connUri, true, DummyLogger); }).toNotThrow();
 
-
-// import { MgClientExt } from 'acropolis-mg';
-
-// import { Logger } from '../legacy-export';
-// Logger.setLevel('debug');
-// Logger.filter('class', ['Db', 'Server', 'ReplSet', 'Pool', 'Cursor', 'Connection', 'Ping']);
+// eslint-disable-next-line no-console
+console.info('*** set __inspect__ variable in package.json to true || false to view/hide test details ***');
 
 describe('check class', () => {
   const connUri = mongoConnOptions.connUri || __mongoUrl__ || 'mongodb://localhost:27017/test';
@@ -23,6 +23,8 @@ describe('check class', () => {
   const randomValue = () => Math.floor((Math.random() * 10));
 
   beforeAll(async () => {
+    expect(() => { connectAndPing(connUri, true, DummyLogger); }).not.toThrow();
+    // connectAndPing (connUri, true, DummyLogger);
     mgClient = await new MgClientExt(connUri, {});
     mgClient.once('connectionReady', () => clientConnected = true);
     await mgClient.connect();
