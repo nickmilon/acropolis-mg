@@ -6,19 +6,16 @@
  */
 
 import { isInRange } from 'acropolis-nd/lib/Pythagoras.js';
-import { inspectIt } from 'acropolis-nd/lib/Plato.js';
+import { inspectIt } from 'acropolis-nd/lib/scripts/nodeOnly.js';
 import { MgClientExt } from '../index.js';
-import { mongoConnOptions } from '../config.js';
+import { mongoConnOptions, testsOptions } from '../config.js';
 import { group, sampleAutoSize } from '../lib/pipelines/stages.js';
 import { CollectionScanner } from '../lib/aggregations/collectionScan.js';
 import { populateRnd, getPearsonR } from '../lib/scripts/base.js';
 import * as modelsUtils  from '../lib/models/utils.js';
 
 const logger = (__inspect__ === true) ? console : null;
-
-const tesDbName = 'test';
-const randomCollName = 'random';
-const testCollName = 'test';
+const { tesDbName, randomCollName, testCollName, populateCount, populateVersion } = testsOptions;
 
 describe('check operations', () => {
   const connUri = mongoConnOptions.connUri || __mongoUrl__ || 'mongodb://localhost:27017/test';
@@ -33,25 +30,26 @@ describe('check operations', () => {
     db = mgClient.db(tesDbName);
     collRandom = db.collection(randomCollName);
     collTest = db.collection(testCollName);
-    await populateRnd(collRandom);
+    await populateRnd(collRandom, populateCount, logger, populateVersion);
   });
 
   afterAll(async () => {
     await mgClient.close();
   });
 
-  it('collection has enough records >100', async () => {
+  it('collection has enough records > 999', async () => {
     result = await collRandom.estimatedDocumentCount();
-    expect(result).toBeGreaterThan(100);
+    expect(result).toBeGreaterThan(999);
   });
 
   it('scanner bucketQueries, bucketPipeline, scan', async () => {
     const buckets = 4;
     const size = await sampleAutoSize(collRandom);
-    expect(size).toBeGreaterThan(100);
+    console.log({ size });
+    expect(size).toBeGreaterThan(40);
     expect(size).toBeLessThan(4000);
     const docsPreCount = await collRandom.estimatedDocumentCount();
-    expect(docsPreCount).toBeGreaterThan(9999);
+    expect(docsPreCount).toBeGreaterThan(999);
     const scanner = new CollectionScanner(collRandom, { fldName: 'cnt', buckets, size });
     const bucketQueries = await scanner.bucketQueries();
     inspectIt({ bucketQueries }, logger);

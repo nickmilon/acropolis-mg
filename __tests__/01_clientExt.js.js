@@ -4,7 +4,8 @@
  * @jest-environment node
  */
 
-import { DummyLogger, inspectIt } from 'acropolis-nd/lib/Plato.js';
+import { DummyLogger } from 'acropolis-nd/lib/Plato.js';
+import { inspectIt } from 'acropolis-nd/lib/scripts/nodeOnly.js';
 import { MgClientExt } from '../index.js';
 import { mongoConnOptions } from '../config.js';
 import { connectAndPing } from '../lib/scripts/connect.js';
@@ -12,6 +13,9 @@ import { connectAndPing } from '../lib/scripts/connect.js';
 // expect(async () => { await connectAndPing(connUri, true, DummyLogger); }).toNotThrow();
 
 // eslint-disable-next-line no-console
+
+console.log('check version compatibility mongodb@3.7.1');
+
 console.info('*** set __inspect__ variable in package.json to true || false to view/hide test details ***');
 
 describe('check class', () => {
@@ -45,7 +49,8 @@ describe('check class', () => {
 
   it('gets and methods', () => {
     result = mgClient.extEvents;
-    expect(result).toEqual(expect.arrayContaining(['connectionReady', 'ping'])); // some events
+    // @v3 expect(result).toEqual(expect.arrayContaining(['connectionReady', 'ping'])); // @v4 some events
+    expect(result).toEqual(expect.arrayContaining(['connectionCreated', 'connectionReady'])); // @v4 some events
     result = mgClient.extDefaultDbName();
     expect(result).toEqual('test');
   });
@@ -54,7 +59,8 @@ describe('check class', () => {
     const coll = dbTest.collection('jest');
     const value = randomValue();
     result = await coll.insertOne({ value });
-    expect(result.result.ok).toEqual(1);
+    // @v3 expect(result.result.ok).toEqual(1);
+    expect(result.acknowledged).toBe(true);  // @v4
     const insertedDoc = await coll.findOne({ _id: result.insertedId });
     expect(insertedDoc.value).toEqual(value);
   });

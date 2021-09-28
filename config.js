@@ -25,8 +25,18 @@ const mongoConnOptions = {
   connOptions: {},
 };
 
+const testsOptions = {
+  tesDbName: 'test',
+  randomCollName: 'random',
+  testCollName: 'test',
+  pagingColName: 'paging',
+  populateCount: 1000,  // must be  > 999
+  populateVersion: 1,
+};
+
 export {
   docUpdateOpts,
   MgClientExt,
   mongoConnOptions,
+  testsOptions,
 };
