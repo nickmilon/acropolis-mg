@@ -5,7 +5,6 @@
  */
 
 import { DummyLogger } from 'acropolis-nd/lib/Plato.js';
-import { inspectIt } from 'acropolis-nd/lib/scripts/nodeOnly.js';
 import { MgClientExt } from '../index.js';
 import { mongoConnOptions } from '../config.js';
 import { connectAndPing } from '../lib/scripts/connect.js';

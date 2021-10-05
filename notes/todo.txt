@@ -1,2 +1,6 @@
-pagination in models
-parent child
+and parent child
+and 
+    MgOpsReqRes from /_nm/prgs/my-node/rapchat-heracles/routes/cron.js
+    take only generic stuff ignore req res 
+    changeStream from /_nm/prgs/my-node/rapchat-heracles/modules/clickhouse/changestream.js
+

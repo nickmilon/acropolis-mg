@@ -53,7 +53,7 @@
     ],
     "globals": {
       "__mongoUrl__": "mongodb://localhost:27017/test",
-      "__inspect__": true
+      "__inspect__": false
     }
   }
 }
