@@ -30,7 +30,7 @@
   "homepage": "https://github.com/nickmilon/acropolis-mg#readme",
   "dependencies": {
     "acropolis-nd": "github:nickmilon/acropolis-nd",
-    "mongodb": "^4.1.2"
+    "mongodb": "^5.5.0"
   },
   "devDependencies": {
     "jest": "^26.6.3"
