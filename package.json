@@ -1,6 +1,6 @@
 {
   "name": "acropolis-mg",
-  "version": "0.2.2",
+  "version": "1.0.1",
   "description": "node mongoDb client, utilities and Best Practices",
   "type": "module",
   "main": "index.js",
@@ -30,10 +30,7 @@
   "homepage": "https://github.com/nickmilon/acropolis-mg#readme",
   "dependencies": {
     "acropolis-nd": "github:nickmilon/acropolis-nd",
-    "mongodb": "^5.6.0"
-  },
-  "devDependencies": {
-    "jest": "^26.6.3"
+    "mongodb": ">=6.0.0"
   },
   "engines": {
     "node": ">=14"
